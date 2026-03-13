@@ -46,6 +46,13 @@ vector<int> NeuralNetwork::getOutputNodeIds() const {
 // STUDENT TODO: IMPLEMENT
 vector<double> NeuralNetwork::predict(DataInstance instance) {
 
+    for (int i = 0; i < nodes.size(); i++) {
+        if (nodes.at(i) != nullptr) {
+            nodes.at(i)->postActivationValue = 0;
+            nodes.at(i)->preActivationValue = 0;
+        }
+    }
+    
     vector<double> input = instance.x;
 
     // error checking : size mismatch
@@ -81,7 +88,7 @@ vector<double> NeuralNetwork::predict(DataInstance instance) {
             Connection con = it->second;
             visitPredictNeighbor(con);
             if(seen.find(it->first) == seen.end()){
-                q.push(con.dest);
+                 q.push(con.dest);
                 seen.insert(it->first);
             }
         }
